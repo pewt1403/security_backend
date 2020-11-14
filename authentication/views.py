@@ -7,3 +7,6 @@ def register(request):
 
 def login(request):
     return
+
+def logout(request):
+    return
