@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <form action="{% url 'manage_Blogs:creatBlog'%}" method="POST">
+            {% csrf_token %}
+            <label for="title">Title:</label><br>
+            <input type="text" id="title" name="title"><br>
+            <label for="content">Content:</label><br>
+            <input type="text" id="content" name="content"><br>
+            <input type="submit" value="Submit"/>
+        </form>
+    </body>
+</html>

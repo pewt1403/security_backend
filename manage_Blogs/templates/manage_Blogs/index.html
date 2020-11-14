@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head></head>
+
+<body>
+    {% if orderedBlogList %}
+    <ul>
+        {% for blog in orderedBlogList %}
+        <li><a href="{% url 'manage_Blogs:blogDetail' blog.id%}">{{ blog.title }}</a></li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No blog are available.</p>
+    {% endif %}
+
+    <a href="{% url 'manage_Blogs:creatBlog' %}">Create Block</a>
+
+</body>
+
+</html>
