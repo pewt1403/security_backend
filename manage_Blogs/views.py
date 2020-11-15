@@ -80,16 +80,15 @@ def editBlog(request, blogId):
     context = {"user": request.user, "blog": blog}
     return render(request, "manage_Blogs/editBlog.html", context)
 
+
 @login_required(login_url="manage_Blogs:login")
 def deleteBlog(request, blogId):
     blog = get_object_or_404(Blog, pk=blogId)
     if (not request.user.is_superuser) and (blog.owner_id != request.user.id):
-        print(blog.owner_id, request.user.id)
         return HttpResponseForbidden()
-    elif request.method == "GET":
+    if request.method == "POST":
         blog.delete()
-        return HttpResponseRedirect(reverse("manage_Blogs:blogs"))
-    return HttpResponseForbidden()
+    return HttpResponseRedirect(reverse("manage_Blogs:blogs"))
 
 
 @login_required(login_url="manage_Blogs:login")
@@ -118,15 +117,18 @@ def editComment(request, blogId, commentId):
 
     return HttpResponseForbidden()
 
+
 @login_required(login_url="manage_Blogs:login")
 def deleteComment(request, blogId, commentId):
     blog = get_object_or_404(Blog, pk=blogId)
     comment = get_object_or_404(Comment, pk=commentId)
     if (not request.user.is_superuser) and (comment.owner_id != request.user.id):
         return HttpResponseForbidden()
-    if request.method == "GET":
+    if request.method == "POST":
         comment.delete()
     return HttpResponseRedirect(reverse("manage_Blogs:blogDetail", args=(blog.id,)))
+
+
 def logoutPage(request):
     if request.user.is_authenticated:
         logout(request)

@@ -31,9 +31,13 @@
                 <div class="box">
                     <div class="is-flex is-justify-content-space-between">
                         <b style="font-size: 30px;">Edit Blog</b>
-                        <a class="icon" href="{% url 'manage_Blogs:deleteBlog' blog.id%}" onclick="return confirm('Are you sure to delete this blog?')" type="submit">
-                            <i class="fas fa-eraser" style="color: red;"></i>
-                        </a>
+                        <form name="deletingBlog{{blog.id}}" action="{% url 'manage_Blogs:deleteBlog' blog.id %}"
+                            onsubmit="return confirm('Are you sure to delete this blog?');" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" style="border:none;color:red;cursor:pointer">
+                                <i class="fas fa-eraser"></i>
+                            </button>
+                        </form>
                     </div>
 
                     <hr>
