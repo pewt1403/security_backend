@@ -82,6 +82,14 @@ DATABASES = {
         'PASSWORD': 'Security#01',
         'HOST': '127.0.0.1',
         'PORT': '5432',
+    },
+    'production': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'securitydb',
+        'USER': 'securityproject',
+        'PASSWORD': 'Security#01',
+        'HOST': 'database',
+        'PORT': '5432',
     }
 }
 
