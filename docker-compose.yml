@@ -6,10 +6,21 @@ services:
       - POSTGRES_USER=securityproject
       - POSTGRES_PASSWORD=Security#01
       - POSTGRES_DB=securitydb
+      - POSTGRES_HOST=database
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
     expose:
       - 5432
   app:
     build: .
+    environment:
+      - POSTGRES_USER=securityproject
+      - POSTGRES_PASSWORD=Security#01
+      - POSTGRES_DB=securitydb
+      - POSTGRES_HOST=database
+      - WAIT_HOSTS=database:5432
+      - SECRET_KEY=2433tfe$$%&$$%EH$$HTH
+      - DEBUG=False
     ports:
       - "8000:8000"
     depends_on:
