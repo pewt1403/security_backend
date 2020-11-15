@@ -1,29 +1,21 @@
-from django.utils import timezone
+from django.contrib.auth.models import User
 from django.db import models
+
 
 # Create your models here.
 class Blog(models.Model):
     title = models.CharField(max_length=100)
-    creator = models.CharField(max_length=30)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.CharField(max_length=2100)
     score = models.IntegerField(default=0)
-    pub_date = models.DateTimeField('date published')
+    pub_date = models.DateTimeField(auto_now=True)
     edited = models.BooleanField(default=False)
 
-    @classmethod
-    def create(cls, title, content, creator):
-        blog = cls(title=title, creator=creator, content=content, score=0, pub_date= timezone.now())
-        return blog
 
 class Comment(models.Model):
     Blogs = models.ForeignKey(Blog, on_delete=models.CASCADE)
-    creator = models.CharField(max_length=30)
-    pub_date =  models.DateTimeField('date published')
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    pub_date = models.DateTimeField(auto_now=True)
     comment = models.CharField(max_length=700)
     score = models.IntegerField(default=0)
     edited = models.BooleanField(default=False)
-
-    @classmethod
-    def create(cls, comment, blogId, creator):
-        newComment = cls(Blogs=blogId, creator= creator, pub_date=timezone.now(), comment=comment, score=0 )
-        return newComment
