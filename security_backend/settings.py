@@ -27,6 +27,7 @@ SECRET_KEY = config("SECRET_KEY", default="DEFAULT_SECRET")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", default=False, cast=bool)
 
+
 ALLOWED_HOSTS = config(
     "ALLOWED_HOSTS",
     cast=lambda v: [s.strip() for s in v.split(",")],
@@ -90,6 +91,7 @@ DATABASES = {
         "PORT": "5432",
     },
 }
+
 
 
 # Password validation

@@ -64,9 +64,12 @@
                     <div class="is-flex is-justify-content-space-between">
                         <b style="font-size: 30px;">{{blog.title}}</b>
                         {% if blog.owner_id == user.id or user.is_superuser %}
-                        <a class="icon" href="{% url 'manage_Blogs:editBlog' blog.id %}">
-                            <i class="fas fa-edit"></i>
-                        </a>
+                        <div>
+                            <a class="icon" href="{% url 'manage_Blogs:editBlog' blog.id %}">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                        </div>
+                        
                         {% endif %}
                     </div>
                     <p>{{blog.content}}</p>
@@ -82,6 +85,9 @@
                         {% if comment.owner_id == user.id or user.is_superuser %}
                         <a class="icon" onclick="toggleEdit('{{comment.id}}')">
                             <i class="fas fa-edit"></i>
+                        </a>
+                        <a style="display: none;" name="editing{{comment.id}}" class="icon" href="{% url 'manage_Blogs:deleteComment' blog.id comment.id %}" onclick="return confirm('Are you sure to delete this comment?')" type="submit">
+                            <i class="fas fa-eraser" style="color: red;"></i>
                         </a>
                         {% endif %}
 
@@ -102,6 +108,7 @@
                         </div>
 
                     </form>
+                    
                     <hr style="margin-bottom: 5px;">
                     <p style="font-size: small; color: rgb(90, 90, 90);text-align: right; ">{{comment.owner.username}} -
                         {% if comment.edited %} Edited {% endif %}{{comment.pub_date}}</p>

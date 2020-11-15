@@ -13,15 +13,18 @@ urlpatterns = [
     # /blogs/1
     path("blogs/<int:blogId>/", views.blogDetail, name="blogDetail"),
     path("blogs/create/", views.createBlog, name="createBlog"),
+    path("blogs/<int:blogId>/delete/", views.deleteBlog, name="deleteBlog"),
     path(
-        "blogs/createComment/<int:blogId>/", views.createComment, name="createComment"
+        "blogs/<int:blogId>/createComment/", views.createComment, name="createComment"
     ),
-    path("blogs/edit/<int:blogId>/", views.editBlog, name="editBlog"),
+    path("blogs/<int:blogId>/edit/", views.editBlog, name="editBlog"),
     path(
-        "blogs/edit/<int:blogId>/<int:commentId>/",
+        "blogs/<int:blogId>/edit/<int:commentId>/",
         views.editComment,
         name="editComment",
     ),
+    path("blogs/<int:blogId>/delete/<int:commentId>/", views.deleteComment, name="deleteComment"),
+    
     path("login/", views.loginPage, name="login"),
     path("logout/", views.logoutPage, name="logout"),
 ]
