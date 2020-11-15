@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <nav class="container is-flex is-justify-content-space-between pt-2 pb-2" style='max-width: 500px'>
+    <nav class="container is-flex is-justify-content-space-between is-align-items-center pt-2 pb-2" style='max-width: 500px'>
         <a class='button is-info' href="{% url 'manage_Blogs:blogs' %}">
             <span class="icon">
                 <i class="fas fa-home"></i>
@@ -44,19 +44,19 @@
                     <div class="is-flex is-justify-content-space-between">
                         <b style="font-size: 30px;">Create Blog</b>
                     </div>
-                    <hr>
+                    <hr class="mt-2 mb-5">
                     <form action="{% url 'manage_Blogs:createBlog'%}" method="POST" class="mb-0">
                         {% csrf_token %}
                         <div class="field">
+                            <label class='label' for="title">Title</label>
                             <div class="control">
-                                <label for="title">Title:</label><br>
-                                <input class="text" type="text" id="title" name="title"><br>
+                                <input class="input" type="text" id="title" name="title" placeholder="Awesome Title"><br>
                             </div>
                         </div>
                         <div class="field">
+                            <label class='label' for="content">Content</label>
                             <div class="control">
-                                <label for="content">Content:</label><br>
-                                <textarea class="textarea" id="content" name="content"></textarea>
+                                <textarea class="textarea" id="content" name="content" placeholder="Once in the life time."></textarea>
                             </div>
                         </div>
                         <div class="field">
