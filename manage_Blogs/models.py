@@ -1,5 +1,3 @@
-import datetime
-
 from django.utils import timezone
 from django.db import models
 
@@ -10,16 +8,19 @@ class Blog(models.Model):
     content = models.CharField(max_length=2100)
     score = models.IntegerField(default=0)
     pub_date = models.DateTimeField('date published')
+    edited = models.BooleanField(default=False)
 
-    def __str__(self):
-        return str(self.title)
-
-    def was_published_recently(self):
-        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
+    # @classmethod
+    # def has_perm_edit(self, user):
+    #     print(user.username, self.creator)
+    #     if user.id == self.pk:
+    #         return True
+    #     else:
+    #         return False
 
     @classmethod
-    def create(cls, title, content):
-        blog = cls(title=title, content=content, score=0, pub_date= timezone.now())
+    def create(cls, title, content, creator):
+        blog = cls(title=title, creator=creator, content=content, score=0, pub_date= timezone.now())
         return blog
 
 class Comment(models.Model):
@@ -29,10 +30,7 @@ class Comment(models.Model):
     comment = models.CharField(max_length=700)
     score = models.IntegerField(default=0)
 
-    def __str__(self):
-        return str(self.comment)
-
     @classmethod
-    def create(cls, comment, blogId):
-        newComment = cls(creator='', score=0, pub_date=timezone.now(),Blogs=blogId, comment=comment)
+    def create(cls, comment, blogId, creator):
+        newComment = cls(Blogs=blogId, creator= creator, pub_date=timezone.now(), comment=comment, score=0 )
         return newComment

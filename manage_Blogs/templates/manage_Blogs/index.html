@@ -10,18 +10,31 @@
 
 <body>
     <nav class="container is-flex is-justify-content-space-between pt-2 pb-2" style='max-width: 500px'>
-        <a class='button is-info' href="{% url 'manage_Blogs:creatBlog' %}">
+        <a class='button is-info' href="{% url 'manage_Blogs:createBlog' %}">
             <span class="icon">
                 <i class="fas fa-plus"></i>
             </span>
-            <span>create new post</span>
+            <span>Create new blog</span>
         </a>
-        <a class='button is-info' href='/login.html'>
+        {% if user.is_authenticated %}
+        <p>{{user.username}}</p>
+        <a class='button is-info' href="{% url 'manage_Blogs:logout' %}">
             <span class="icon">
                 <i class="fas fa-sign-out-alt"></i>
             </span>
-            <span>logout</span>
+            
+            <span>Logout</span>
+            
         </a>
+        {% else %}
+        <a class='button is-info' href="{% url 'manage_Blogs:login' %}">
+            <span class="icon">
+                <i class="fas fa-sign-out-alt"></i>
+            </span>
+            
+            <span>Login</span>
+        </a>
+        {% endif %}
     </nav>
     <section class="hero is-fullheight is-info">
         <div class="hero-body">
@@ -30,27 +43,16 @@
                 {% for blog in orderedBlogList %}
                 <div class="box">
                     <div class="is-flex is-justify-content-space-between">
-                        <p style="white-space: pre-line;"><b>{{ blog.title }}</b>
-                            Created by {{blog.creator}}
+                        <p style="white-space: pre-line;"><b style=" font-size: 30px;"><a href="{% url 'manage_Blogs:blogDetail' blog.id%}">{{blog.title }}</a></b>
+                            Created by {{blog.creator}} - {{blog.pub_date}}
                         </p>
-                        <a class="icon" href="{% url 'manage_Blogs:blogDetail' blog.id%}">
-                            <i class="fas fa-edit"></i>
-                        </a>
-
                     </div>
-                    <hr>
-                    <p>{{blog.content}}</p>
                 </div>
-
                 {% endfor %}
-                {% else %}
-                <p>No blog are available.</p>
                 {% endif %}
-
             </div>
         </div>
     </section>
-
 </body>
 
 </html>
