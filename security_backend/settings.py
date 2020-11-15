@@ -129,3 +129,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = "/static/"
+
+# Security enhancement
+CSRF_COOKIE_HTTPONLY = True
+LANGUAGE_COOKIE_HTTPONLY = True
+SESSION_COOKIE_HTTPONLY = True
