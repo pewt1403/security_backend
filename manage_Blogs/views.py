@@ -24,7 +24,7 @@ def loginPage(request):
 
 def index(request):
     # print(request.user.username)
-    orderedBlogList = Blog.objects.order_by('-pub_date')[:5]
+    orderedBlogList = Blog.objects.order_by('-pub_date')
     template = loader.get_template('manage_Blogs/index.html')
     context = {
         'orderedBlogList': orderedBlogList,
@@ -33,12 +33,11 @@ def index(request):
     return HttpResponse(template.render(context, request))
 
 def blogDetail(request, blogId):
-    try:
-        blog = Blog.objects.get(pk=blogId)
-    except Blog.DoesNotExist:
-        raise Http404("Blog does not exist")
+    blog = get_object_or_404(Blog, pk=blogId)
+    comments = blog.comment_set.all().order_by('-id')
     context = {
         'blog': blog,
+        'comments': comments
     }
     return render(request, 'manage_Blogs/detail.html', context)
 
@@ -84,8 +83,16 @@ def createComment(request, blogId):
  
 
 @login_required(login_url='manage_Blogs:login')
-def editComment(request):
-    return
+def editComment(request, blogId, commentId):
+    blog = get_object_or_404(Blog, pk=blogId)
+    comment = get_object_or_404(Comment, pk=commentId)
+    if request.method == 'POST' and comment.creator == request.user.username:
+        comment.comment = request.POST['comment']
+        comment.pub_date= timezone.now()
+        comment.edited = True
+        comment.save()
+        return HttpResponseRedirect(reverse('manage_Blogs:blogDetail', args=(blog.id,)))
+    return HttpResponseRedirect(reverse('manage_Blogs:blogDetail', args=(blog.id,)))
 
 @login_required(login_url='manage_Blogs:login')
 def deleteComment(request):

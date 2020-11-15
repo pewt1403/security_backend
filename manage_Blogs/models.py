@@ -10,14 +10,6 @@ class Blog(models.Model):
     pub_date = models.DateTimeField('date published')
     edited = models.BooleanField(default=False)
 
-    # @classmethod
-    # def has_perm_edit(self, user):
-    #     print(user.username, self.creator)
-    #     if user.id == self.pk:
-    #         return True
-    #     else:
-    #         return False
-
     @classmethod
     def create(cls, title, content, creator):
         blog = cls(title=title, creator=creator, content=content, score=0, pub_date= timezone.now())
@@ -29,6 +21,7 @@ class Comment(models.Model):
     pub_date =  models.DateTimeField('date published')
     comment = models.CharField(max_length=700)
     score = models.IntegerField(default=0)
+    edited = models.BooleanField(default=False)
 
     @classmethod
     def create(cls, comment, blogId, creator):

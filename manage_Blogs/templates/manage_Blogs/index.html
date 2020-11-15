@@ -14,7 +14,7 @@
             <span class="icon">
                 <i class="fas fa-plus"></i>
             </span>
-            <span>Create new blog</span>
+            <span>New blog</span>
         </a>
         {% if user.is_authenticated %}
         <p>{{user.username}}</p>
@@ -44,7 +44,7 @@
                 <div class="box">
                     <div class="is-flex is-justify-content-space-between">
                         <p style="white-space: pre-line;"><b style=" font-size: 30px;"><a href="{% url 'manage_Blogs:blogDetail' blog.id%}">{{blog.title }}</a></b>
-                            Created by {{blog.creator}} - {{blog.pub_date}}
+                            Created by {{blog.creator}} - {% if blog.edited %} Edited {% endif %} {{blog.pub_date}}
                         </p>
                     </div>
                 </div>

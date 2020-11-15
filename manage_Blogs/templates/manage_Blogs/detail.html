@@ -7,6 +7,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
     <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
+    <script>
+        function toggleEdit(i) {
+            let ids = document.getElementsByName("editing" + i);
+            let oldContent;
+            ids.forEach(id => {
+                if (id.style.display === "none") {
+                    id.style.display = "block";
+                    if(id.tagName === "FORM"){
+                        console.log(id.getElementsByClassName("textarea"));
+                        id.getElementsByClassName("textarea")[0].value = ids[0].textContent;
+                    }
+                }
+                else {
+                    id.style.display = "none";
+                }
+
+            });
+            oldContent = ""
+
+        }
+    </script>
 </head>
 
 <body>
@@ -54,20 +75,37 @@
                     <p style="font-size: small; color: rgb(90, 90, 90);text-align: right; ">{{blog.creator}} -
                         {% if blog.edited %} Edited {% endif %}{{blog.pub_date}}</p>
                 </div>
-                {% if blog.comment_set %}
-                {% for comment in blog.comment_set.all %}
+                {% if comments %}
+                {% for comment in comments %}
                 <div class="box" style="padding-bottom: 10px;">
                     <div class="is-flex is-justify-content-space-between">
-                        <p>{{comment.comment}}</p>
+                        <p name="editing{{comment.id}}">{{comment.comment}}</p>
                         {% if comment.creator == user.username %}
-                        <a class="icon" href="{% url 'manage_Blogs:editBlog' blog.id %}">
+                        <a class="icon" onclick="toggleEdit('{{comment.id}}')">
                             <i class="fas fa-edit"></i>
                         </a>
                         {% endif %}
+                        
                     </div>
+                    <form name="editing{{comment.id}}" action="{% url 'manage_Blogs:editComment' blog.id comment.id %}"
+                            method="POST" style="display: none;">
+                            {% csrf_token %}
+                            <div class="field">
+                                <div class="control">
+                                    <label for="comment">Comment:</label><br>
+                                    <textarea class="textarea" id="comment" name="comment"></textarea>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="control">
+                                    <input type="submit" value="Submit" class="button is-info is-fullwidth" />
+                                </div>
+                            </div>
+                            
+                        </form>
                     <hr style="margin-bottom: 5px;">
                     <p style="font-size: small; color: rgb(90, 90, 90);text-align: right; ">{{comment.creator}} -
-                        {{comment.pub_date}}</p>
+                        {% if comment.edited %} Edited {% endif %}{{comment.pub_date}}</p>
 
                 </div>
 

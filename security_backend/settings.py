@@ -25,7 +25,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config("SECRET_KEY", default="DEFAULT_SECRET")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config("DEBUG", default=False, cast=bool)
+#DEBUG = config("DEBUG", default=False, cast=bool)
+DEBUG = True
 
 ALLOWED_HOSTS = config(
     "ALLOWED_HOSTS",
@@ -80,15 +81,25 @@ WSGI_APPLICATION = "security_backend.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": config("POSTGRES_DB", default="securitydb"),
+#         "USER": config("POSTGRES_USER", default=""),
+#         "PASSWORD": config("POSTGRES_PASSWORD", default=""),
+#         "HOST": config("POSTGRES_HOST", default="localhost"),
+#         "PORT": "5432",
+#     },
+# }
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": config("POSTGRES_DB", default="securitydb"),
-        "USER": config("POSTGRES_USER", default=""),
-        "PASSWORD": config("POSTGRES_PASSWORD", default=""),
-        "HOST": config("POSTGRES_HOST", default="localhost"),
-        "PORT": "5432",
-    },
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'securitydb',
+        'USER': 'securityproject',
+        'PASSWORD': 'Security#01',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
+    }
 }
 
 
