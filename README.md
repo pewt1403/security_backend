@@ -20,3 +20,6 @@ To change the model schema:
     <img src="./readme_src/model.png"></img>
 </p>
 </div>
+
+
+# How to run and test for the testing team
